@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GH Trial — Legal Protection for Employees",
-  description: "Give your team access to affordable legal support for life's everyday challenges. A valuable employee benefit designed to provide peace of mind.",
-  icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+  title: "Verdant Finance — Financial Wellness for Every Employee",
+  description: "Verdant Finance is an AI-powered financial wellness platform that helps companies support their employees' financial security, confidence, and long-term wellbeing.",
+  keywords: "employee financial wellness, financial wellbeing, workplace financial benefits, AI financial advisor, employee benefits, financial security",
+  openGraph: {
+    title: "Verdant Finance — Financial Wellness for Every Employee",
+    description: "AI-powered financial wellness that meets employees where they are. Budgeting, planning, investing — one platform for every financial journey.",
+    siteName: "Verdant Finance",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

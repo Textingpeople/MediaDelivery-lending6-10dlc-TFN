@@ -1,44 +1,55 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: '#1C2E5B', color: '#FFFFFF' }}>
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 py-16">
-        <div className="grid md:grid-cols-4 gap-10 mb-12">
-          {/* Brand — uses the actual uploaded PNG logo (inverted for dark bg) */}
+    <footer style={{ background: 'var(--forest)', color: 'var(--ivory)' }}>
+      <div className="max-w-6xl mx-auto px-6 py-20">
+        {/* Top row */}
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
+          {/* Brand */}
           <div className="md:col-span-2">
-            <div className="mb-5">
-              <Image
-                src="/logo.png"
-                alt="GH Trial"
-                width={130}
-                height={44}
-                className="h-11 w-auto object-contain"
-                style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
-              />
+            <div className="mb-6">
+              <span
+                style={{
+                  fontFamily: 'Playfair Display, Georgia, serif',
+                  fontWeight: 600,
+                  fontSize: '1.4rem',
+                  color: 'rgba(245,243,235,0.85)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                Verdant Finance
+              </span>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '280px', fontFamily: 'Inter, sans-serif' }}>
-              Legal protection for every employee. Better outcomes for employers.
+            <p
+              className="headline-md italic-accent mb-6"
+              style={{ color: 'rgba(245,243,235,0.7)', maxWidth: '320px', fontSize: '1.4rem' }}
+            >
+              Financial wellness that grows with your people.
             </p>
-            <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif' }}>
-              support@ghtrial.com<br />
-              838 Walker Rd Ste 21-2<br />
-              Dover, DE 19904-2751
+            <p style={{ color: 'rgba(245,243,235,0.45)', fontSize: '0.85rem', lineHeight: '1.7', maxWidth: '280px' }}>
+              Helping companies build financially secure, confident, and resilient workforces.
             </p>
           </div>
 
-          {/* Company */}
+          {/* Product */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>Company</p>
+            <p className="font-mono-label mb-6" style={{ color: 'rgba(245,243,235,0.4)', fontSize: '0.65rem' }}>
+              Product
+            </p>
             <ul className="space-y-3">
               {[
-                { label: 'About Us', href: '/about' },
-                { label: 'Request a Proposal', href: '/signup' },
-                { label: 'Contact Us', href: '/contact' },
+                { label: 'For Employers', href: '/for-employers' },
+                { label: 'Product', href: '/product' },
+                { label: 'Get Started', href: '/signup' },
               ].map(item => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm hover:text-white transition-colors" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'Inter, sans-serif' }}>
+                  <Link
+                    href={item.href}
+                    style={{ color: 'rgba(245,243,235,0.6)', fontSize: '0.9rem', transition: 'color 0.2s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--ivory)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,235,0.6)')}
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -48,14 +59,22 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>Legal</p>
+            <p className="font-mono-label mb-6" style={{ color: 'rgba(245,243,235,0.4)', fontSize: '0.65rem' }}>
+              Legal
+            </p>
             <ul className="space-y-3">
               {[
                 { label: 'Privacy Policy', href: '/privacy' },
                 { label: 'Terms of Service', href: '/terms' },
+                { label: 'Contact', href: '/contact' },
               ].map(item => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm hover:text-white transition-colors" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'Inter, sans-serif' }}>
+                  <Link
+                    href={item.href}
+                    style={{ color: 'rgba(245,243,235,0.6)', fontSize: '0.9rem', transition: 'color 0.2s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--ivory)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,243,235,0.6)')}
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -64,10 +83,31 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <p className="text-center text-sm" style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'Inter, sans-serif' }}>
-            &copy; {new Date().getFullYear()} GH Trial. All rights reserved.
-          </p>
+        {/* Divider */}
+        <div style={{ borderTop: '1px solid rgba(245,243,235,0.1)', paddingTop: '2rem' }}>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="font-mono-label" style={{ color: 'rgba(245,243,235,0.3)', fontSize: '0.65rem' }}>
+              © {new Date().getFullYear()} Verdant Finance. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4">
+              <p className="font-mono-label" style={{ color: 'rgba(245,243,235,0.3)', fontSize: '0.65rem' }}>
+                verdantfinance.com
+              </p>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(245,243,235,0.1)', transition: 'background 0.2s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(245,243,235,0.2)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(245,243,235,0.1)')}
+                aria-label="Verdant Finance on LinkedIn"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

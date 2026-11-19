@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Link from 'next/link';
+import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 export default function ContactPage() {
@@ -20,92 +21,278 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FFFFFF' }}>
-      <Navbar />
-      <section className="py-12" style={{ backgroundColor: '#F5F7FA' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold mb-4" style={{ color: '#1F2937' }}>Contact Us</h1>
-          <p className="text-lg" style={{ color: '#6B7280' }}>We're here to help. Reach out with any questions, concerns, or feedback.</p>
+    <div style={{ background: 'var(--ivory)', color: 'var(--charcoal)' }}>
+      <Nav />
+
+      {/* ── HERO ── */}
+      <section
+        className="pt-40 pb-20 px-6"
+        style={{ background: 'var(--forest)' }}
+      >
+        <div className="max-w-4xl mx-auto">
+          <p className="font-mono-label mb-6" style={{ color: 'rgba(245,243,235,0.45)', fontSize: '0.65rem' }}>
+            Contact
+          </p>
+          <h1 className="headline-xl text-white mb-6" style={{ maxWidth: '560px' }}>
+            We&apos;re here
+            <br />
+            <em className="italic-accent">to help.</em>
+          </h1>
+          <p style={{ color: 'rgba(245,243,235,0.6)', fontSize: '1rem', lineHeight: 1.8, maxWidth: '400px' }}>
+            Reach out with any questions, concerns, or feedback. We respond within one to two business days.
+          </p>
         </div>
       </section>
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#1F2937' }}>Send Us a Message</h2>
-            {submitted ? (
-              <div className="rounded-xl p-8 text-center" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#DCFCE7' }}>
-                  <svg className="w-8 h-8" style={{ color: '#16A34A' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-2" style={{ color: '#1F2937' }}>Message Sent!</h3>
-                <p style={{ color: '#6B7280' }}>Thank you for reaching out. We'll get back to you within 1–2 business days.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2937' }}>Full Name *</label>
-                  <input type="text" name="name" required value={formData.name} onChange={handleChange} placeholder="Jane Smith" className="block w-full px-4 py-3 rounded-lg text-gray-900" style={{ border: '1px solid #E5E7EB' }} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2937' }}>Email Address *</label>
-                  <input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="jane@example.com" className="block w-full px-4 py-3 rounded-lg text-gray-900" style={{ border: '1px solid #E5E7EB' }} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2937' }}>Subject *</label>
-                  <select name="subject" required value={formData.subject} onChange={handleChange} className="block w-full px-4 py-3 rounded-lg text-gray-900" style={{ border: '1px solid #E5E7EB' }}>
-                    <option value="">Select a topic...</option>
-                     <option value="sales">Sales</option>
-                     <option value="support">Customer Support</option>
-                     <option value="general">General Inquiry</option>
-                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#1F2937' }}>Message *</label>
-                  <textarea name="message" required rows={5} value={formData.message} onChange={handleChange} placeholder="How can we help you?" className="block w-full px-4 py-3 rounded-lg text-gray-900" style={{ border: '1px solid #E5E7EB' }} />
-                </div>
-                <button type="submit" disabled={submitting} className="w-full py-3 px-6 rounded-lg text-white font-semibold transition-opacity" style={{ backgroundColor: submitting ? '#9CA3AF' : '#E8622A', cursor: submitting ? 'not-allowed' : 'pointer' }}>
-                  {submitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
-            )}
-          </div>
-          <div className="space-y-8">
+
+      {/* ── CONTENT ── */}
+      <section className="py-20 px-6" style={{ background: 'var(--ivory)' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16">
+
+            {/* ── LEFT: Form ── */}
             <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1F2937' }}>Contact Information</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>Email</h3>
-                  <a href="mailto:support@ghtrial.com" className="text-base font-medium hover:underline" style={{ color: '#E8622A' }}>support@ghtrial.com</a>
-                  <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Response within 1–2 business days</p>
+              <p className="font-mono-label mb-6" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
+                Send a Message
+              </p>
+
+              {submitted ? (
+                <div
+                  className="rounded-2xl p-10 text-center"
+                  style={{ background: 'rgba(72,82,56,0.08)', border: '1px solid rgba(72,82,56,0.15)' }}
+                >
+                  <div
+                    className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                    style={{ background: 'rgba(72,82,56,0.12)' }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--olive)" strokeWidth="2">
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="font-serif mb-3" style={{ fontSize: '1.4rem', color: 'var(--forest)' }}>
+                    Message sent.
+                  </h3>
+                  <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                    Thank you for reaching out. We&apos;ll get back to you within 1–2 business days.
+                  </p>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name */}
+                  <div>
+                    <label className="font-mono-label block mb-2" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Jane Smith"
+                      className="w-full px-4 py-3 rounded-xl text-sm"
+                      style={{
+                        background: 'rgba(24,37,27,0.04)',
+                        border: '1px solid rgba(24,37,27,0.12)',
+                        color: 'var(--charcoal)',
+                        outline: 'none',
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="font-mono-label block mb-2" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="jane@example.com"
+                      className="w-full px-4 py-3 rounded-xl text-sm"
+                      style={{
+                        background: 'rgba(24,37,27,0.04)',
+                        border: '1px solid rgba(24,37,27,0.12)',
+                        color: 'var(--charcoal)',
+                        outline: 'none',
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    />
+                  </div>
+
+                  {/* Subject */}
+                  <div>
+                    <label className="font-mono-label block mb-2" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
+                      Subject *
+                    </label>
+                    <select
+                      name="subject"
+                      required
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-xl text-sm"
+                      style={{
+                        background: 'rgba(24,37,27,0.04)',
+                        border: '1px solid rgba(24,37,27,0.12)',
+                        color: formData.subject ? 'var(--charcoal)' : 'rgba(24,37,27,0.35)',
+                        outline: 'none',
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      <option value="" disabled>Select a topic…</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="sms-optout">SMS Opt-Out Request</option>
+                      <option value="sms-help">SMS Help</option>
+                      <option value="privacy">Privacy / Data Request</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="font-mono-label block mb-2" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
+                      Message *
+                    </label>
+                    <textarea
+                      name="message"
+                      required
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="How can we help you?"
+                      className="w-full px-4 py-3 rounded-xl text-sm resize-none"
+                      style={{
+                        background: 'rgba(24,37,27,0.04)',
+                        border: '1px solid rgba(24,37,27,0.12)',
+                        color: 'var(--charcoal)',
+                        outline: 'none',
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn-forest w-full justify-center"
+                    style={{ opacity: submitting ? 0.6 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                  >
+                    {submitting ? 'Sending…' : 'Send Message'}
+                    {!submitting && (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* ── RIGHT: Contact Info ── */}
+            <div>
+              <p className="font-mono-label mb-6" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
+                Contact Information
+              </p>
+
+              <div className="space-y-8">
+                {/* Email */}
                 <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>Mailing Address</h3>
-                  <p style={{ color: '#6B7280' }}>GH Trial<br />838 Walker Rd Ste 21-2<br />Dover, DE 19904-2751</p>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                    Email
+                  </p>
+                  <a
+                    href="mailto:support@verdantfinance.com"
+                    style={{ color: 'var(--forest)', fontWeight: 600, fontSize: '0.95rem' }}
+                  >
+                    support@verdantfinance.com
+                  </a>
+                  <p style={{ color: 'rgba(24,37,27,0.45)', fontSize: '0.82rem', marginTop: '0.3rem' }}>
+                    Response within 1–2 business days
+                  </p>
                 </div>
+
+                {/* Phone */}
                 <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>SMS Support</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for assistance. Message and data rates may apply.</p>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                    Phone
+                  </p>
+                  <a
+                    href="tel:+18005551234"
+                    style={{ color: 'var(--forest)', fontWeight: 600, fontSize: '0.95rem' }}
+                  >
+                    (800) 555-1234
+                  </a>
+                </div>
+
+                {/* Address */}
+                <div>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                    Address
+                  </p>
+                  <p style={{ color: 'var(--charcoal)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                    1200 Financial Way Ste 400<br />Austin, TX 78701<br />United States
+                  </p>
+                </div>
+
+                {/* SMS Support */}
+                <div>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                    SMS Support
+                  </p>
+                  <p style={{ color: 'var(--charcoal)', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                    Reply <strong>STOP</strong> to opt out of messages.
+                    <br />
+                    Reply <strong>HELP</strong> for assistance.
+                    <br />
+                    Message and data rates may apply.
+                  </p>
+                </div>
+
+                {/* Divider */}
+                <div style={{ borderTop: '1px solid rgba(24,37,27,0.1)', paddingTop: '2rem' }}>
+                  <p className="font-mono-label mb-4" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                    FAQ
+                  </p>
+                  <div className="space-y-5">
+                    {[
+                      {
+                        q: 'How do I opt out of SMS?',
+                        a: 'Reply STOP to any message. You\'ll be removed immediately.',
+                      },
+                      {
+                        q: 'Will my information be shared?',
+                        a: 'No. We do not sell or share your mobile number with third parties for marketing.',
+                      },
+                      {
+                        q: 'How do I request my data?',
+                        a: 'Select "Privacy / Data Request" in the form and we\'ll respond within 5 business days.',
+                      },
+                    ].map((item, i) => (
+                      <div key={i}>
+                        <p style={{ fontWeight: 600, color: 'var(--forest)', fontSize: '0.88rem', marginBottom: '0.3rem' }}>
+                          {item.q}
+                        </p>
+                        <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.82rem', lineHeight: 1.6 }}>
+                          {item.a}{' '}
+                          {i === 1 && (
+                            <Link href="/privacy" style={{ color: 'var(--olive)', textDecoration: 'underline' }}>
+                              See our Privacy Policy.
+                            </Link>
+                          )}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1F2937' }}>FAQ</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: '#1F2937' }}>How do I opt out of SMS?</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>Reply <strong>STOP</strong> to any message. You'll be removed immediately.</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: '#1F2937' }}>Will my info be shared?</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>No. We do not sell or share your mobile number with third parties for marketing. See our <a href="/privacy" className="font-medium hover:underline" style={{ color: '#E8622A' }}>Privacy Policy</a>.</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );

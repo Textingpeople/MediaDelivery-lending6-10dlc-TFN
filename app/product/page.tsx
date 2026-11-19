@@ -1,146 +1,252 @@
+'use client';
+
 import Link from 'next/link';
-import { CheckCircle, Scale, Shield, Users, FileText, Home, Heart, CreditCard, BookOpen, Zap, Star } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 export default function ProductPage() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F8F5F1', fontFamily: 'Inter, sans-serif' }}>
-      <Navbar />
+    <div style={{ background: 'var(--ivory)', color: 'var(--charcoal)' }}>
+      <Nav />
 
-      {/* Hero */}
-      <section className="py-20" style={{ backgroundColor: '#F8F5F1' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-8" style={{ backgroundColor: '#DCE8E2', color: '#1C2E5B' }}>
-            <Scale className="w-4 h-4" style={{ color: '#E9632B' }} />
-            The GH Trial Legal Benefit
-          </div>
-          <h1 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 800, fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', color: '#1C2E5B', lineHeight: 1.1, marginBottom: '1.25rem' }}>
-            Comprehensive legal coverage for every employee.
-          </h1>
-          <p style={{ fontSize: '1.15rem', color: '#26334A', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
-            GH Trial is a voluntary employee legal benefit that gives your workforce access to qualified legal support for the everyday legal matters that affect their lives.
+      {/* ── HERO ── */}
+      <section
+        className="relative pt-48 pb-28 px-6"
+        style={{ background: 'var(--forest)' }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="font-mono-label mb-8" style={{ color: 'rgba(245,243,235,0.45)', fontSize: '0.65rem' }}>
+            The Product
           </p>
-          <Link href="/signup" className="inline-block px-8 py-4 rounded-xl font-semibold text-white text-lg transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#E9632B', fontFamily: 'Inter, sans-serif' }}>
-            Request a Proposal
+          <h1 className="headline-xl text-white mb-8">
+            One platform for
+            <br />
+            <em className="italic-accent">every financial journey.</em>
+          </h1>
+          <p style={{ color: 'rgba(245,243,235,0.65)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto 2.5rem' }}>
+            Verdant Finance brings together budgeting, goal planning, debt management, investing guidance, and AI-powered advice — all in one calm, unified experience.
+          </p>
+          <Link href="/talk-to-sales" className="btn-primary">
+            Get Started
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </section>
 
-      {/* What's Included */}
-      <section className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-14">
-            <h2 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#1C2E5B', marginBottom: '1rem' }}>
-              What&apos;s included in the plan
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: '#26334A', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
-              Employees get access to legal support across a wide range of personal and family legal matters.
+      {/* ── CORE FEATURES ── */}
+      <section className="py-28 px-6" style={{ background: 'var(--ivory)' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <p className="font-mono-label mb-6" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
+              Core Features
             </p>
+            <h2 className="headline-lg" style={{ color: 'var(--forest)' }}>
+              Everything employees need
+              <br />
+              <em className="italic-accent">to feel financially secure.</em>
+            </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div className="grid md:grid-cols-2 gap-6">
             {[
-              { icon: Heart, title: 'Family & personal matters', desc: 'Divorce, custody, adoption, name changes, and family legal guidance.' },
-              { icon: Home, title: 'Housing & property', desc: 'Landlord disputes, lease reviews, real estate transactions, and neighbor issues.' },
-              { icon: FileText, title: 'Estate planning', desc: 'Wills, trusts, powers of attorney, living wills, and advance directives.' },
-              { icon: CreditCard, title: 'Consumer protection', desc: 'Debt collection issues, identity theft defense, and consumer rights.' },
-              { icon: BookOpen, title: 'Legal consultations', desc: 'Unlimited phone consultations with attorneys on a wide range of matters.' },
-              { icon: Scale, title: 'Document review & preparation', desc: 'Attorney review and preparation of personal legal documents and contracts.' },
-              { icon: Shield, title: 'Traffic & license issues', desc: 'Traffic violations, license suspensions, and related legal matters.' },
-              { icon: Users, title: 'Immigration assistance', desc: 'Guidance on immigration matters, visa questions, and related legal support.' },
-              { icon: Zap, title: 'Civil lawsuit defense', desc: 'Legal representation and defense for civil lawsuits and disputes.' },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-4 p-6 rounded-2xl bg-white border" style={{ borderColor: '#E8E4DF' }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#F8F5F1' }}>
-                  <item.icon className="w-5 h-5" style={{ color: '#1C2E5B', strokeWidth: 1.75 }} />
+              {
+                title: 'AI Financial Advisor',
+                desc: 'Employees can ask Verdant AI anything — how to pay off debt faster, whether they can afford a home, how to build an emergency fund. They get personalized, actionable answers based on their actual financial situation.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 5v6m0 4h.01" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Financial Dashboard',
+                desc: 'A clear, calm view of net worth, spending, savings progress, and financial goals. Employees see exactly where they stand and what to do next — without feeling overwhelmed.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Goal Planning & Tracking',
+                desc: 'Set goals for emergency funds, debt payoff, home buying, retirement, and more. Verdant Finance builds a personalized plan and tracks progress automatically — adjusting as life changes.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Spending Insights',
+                desc: 'Automatic categorization of spending with clear trends and patterns. Employees understand where their money goes and get AI-powered suggestions for where to optimize.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    <polyline points="16 7 22 7 22 13" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Debt Management',
+                desc: 'Visualize all debt in one place — student loans, credit cards, auto loans. Get AI-generated payoff strategies (avalanche, snowball, or hybrid) tailored to each employee\'s situation.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v4l3 3" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Retirement & Investing Guidance',
+                desc: 'Help employees understand their 401k, IRA, and investment options. Verdant AI explains complex concepts in plain language and helps employees make confident decisions.',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                ),
+              },
+            ].map((feature, i) => (
+              <div key={i} className="card-feature p-8">
+                <div
+                  className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5"
+                  style={{ background: 'rgba(24,37,27,0.08)', color: 'var(--forest)' }}
+                >
+                  {feature.icon}
+                </div>
+                <h3
+                  className="font-serif mb-3"
+                  style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--forest)' }}
+                >
+                  {feature.title}
+                </h3>
+                <p style={{ color: 'rgba(24,37,27,0.6)', fontSize: '0.9rem', lineHeight: 1.75 }}>
+                  {feature.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRIVACY SECTION ── */}
+      <section className="py-28 px-6" style={{ background: 'var(--white)' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="font-mono-label mb-6" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
+                Privacy First
+              </p>
+              <h2 className="headline-lg mb-6" style={{ color: 'var(--forest)' }}>
+                Financial data is
+                <br />
+                <em className="italic-accent">deeply personal.</em>
+              </h2>
+              <p style={{ color: 'rgba(24,37,27,0.6)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
+                Verdant Finance is built with privacy at its core. Employees control exactly what they connect and share. Their individual financial data is never visible to their employer.
+              </p>
+              <div className="space-y-5">
+                {[
+                  { title: 'Bank-level encryption', desc: 'All financial data is encrypted in transit and at rest.' },
+                  { title: 'Employee-controlled access', desc: 'Employees connect accounts themselves and can disconnect anytime.' },
+                  { title: 'Employer sees only aggregates', desc: 'Companies see program engagement metrics — never individual data.' },
+                  { title: 'No data selling', desc: 'We never sell or share employee financial data with third parties.' },
+                ].map(item => (
+                  <div key={item.title} className="flex items-start gap-4">
+                    <div
+                      className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: 'rgba(24,37,27,0.1)' }}
+                    >
+                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" strokeWidth="3">
+                        <path d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 600, color: 'var(--forest)', fontSize: '0.9rem', marginBottom: '0.2rem' }}>{item.title}</p>
+                      <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.85rem' }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Privacy visual */}
+            <div
+              className="rounded-2xl p-8"
+              style={{ background: 'var(--ivory)', border: '1px solid rgba(24,37,27,0.1)' }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div
+                  className="w-10 h-10 rounded-2xl flex items-center justify-center"
+                  style={{ background: 'var(--forest)' }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
                 </div>
                 <div>
-                  <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '0.95rem', color: '#1C2E5B', marginBottom: '0.35rem' }}>{item.title}</h3>
-                  <p style={{ fontSize: '0.875rem', color: '#26334A', lineHeight: 1.6 }}>{item.desc}</p>
+                  <p style={{ fontWeight: 600, color: 'var(--forest)', fontSize: '0.9rem' }}>Your Financial Data</p>
+                  <p className="font-mono-label" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>You control what you share</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* How It Works */}
-      <section className="py-20" style={{ backgroundColor: '#F8F5F1' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <h2 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#1C2E5B', marginBottom: '1rem', textAlign: 'center' }}>
-            How the benefit works
-          </h2>
-          <p style={{ fontSize: '1.05rem', color: '#26334A', textAlign: 'center', marginBottom: '3rem', lineHeight: 1.7 }}>
-            Simple for employers to offer. Easy for employees to use.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { num: '01', title: 'Employer adds GH Trial', desc: 'Add GH Trial to your benefits package. Our team handles setup — no IT required.' },
-              { num: '02', title: 'Employees enroll', desc: 'Employees receive their unique Employee ID and activate their benefit in minutes.' },
-              { num: '03', title: 'Access legal support', desc: 'Employees connect with qualified legal support for their specific situation — anytime.' },
-            ].map((step) => (
-              <div key={step.num} className="text-center p-8 bg-white rounded-2xl border" style={{ borderColor: '#E8E4DF' }}>
-                <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5 text-xl font-bold text-white" style={{ backgroundColor: '#1C2E5B', fontFamily: 'Manrope, sans-serif' }}>
-                  {step.num}
-                </div>
-                <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.05rem', color: '#1C2E5B', marginBottom: '0.75rem' }}>{step.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: '#26334A', lineHeight: 1.7 }}>{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Employer Benefits */}
-      <section className="py-20" style={{ backgroundColor: '#1C2E5B' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: 'white', marginBottom: '1.25rem' }}>
-                Why employers choose GH Trial
-              </h2>
-              <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: '2rem' }}>
-                A voluntary benefit that costs nothing to administer and delivers real value to your workforce.
-              </p>
-              <Link href="/signup" className="inline-block px-7 py-3.5 rounded-xl font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#E9632B', fontFamily: 'Inter, sans-serif' }}>
-                Request a Proposal
-              </Link>
-            </div>
-            <div className="space-y-4">
-              {[
-                { title: 'No cost to the employer', desc: 'GH Trial is funded through voluntary employee payroll deduction.' },
-                { title: 'Zero IT setup required', desc: 'Employees self-enroll using their unique Employee ID. No integration needed.' },
-                { title: 'Immediate coverage', desc: 'Employees have access to legal support from day one of enrollment.' },
-                { title: 'Dedicated HR support', desc: 'Our team supports your HR department throughout implementation and beyond.' },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-4 p-5 rounded-2xl" style={{ backgroundColor: 'rgba(255,255,255,0.07)' }}>
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#E9632B' }} />
-                  <div>
-                    <p style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '0.95rem', color: 'white', marginBottom: '0.25rem' }}>{item.title}</p>
-                    <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.desc}</p>
+              <div className="space-y-3">
+                {[
+                  { label: 'Bank accounts', connected: true },
+                  { label: 'Spending categories', connected: true },
+                  { label: 'Savings goals', connected: true },
+                  { label: 'Investment accounts', connected: false },
+                  { label: 'Credit score', connected: false },
+                ].map(item => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between p-3 rounded-xl"
+                    style={{ background: 'rgba(24,37,27,0.04)', border: '1px solid rgba(24,37,27,0.08)' }}
+                  >
+                    <span style={{ fontSize: '0.85rem', color: 'var(--charcoal)', fontWeight: 500 }}>{item.label}</span>
+                    <div
+                      className="w-9 h-5 rounded-full flex items-center px-0.5 transition-all"
+                      style={{ background: item.connected ? 'var(--olive)' : 'rgba(24,37,27,0.15)' }}
+                    >
+                      <div
+                        className="w-4 h-4 bg-white rounded-full shadow-sm transition-all"
+                        style={{ transform: item.connected ? 'translateX(16px)' : 'translateX(0)' }}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <p style={{ fontSize: '0.72rem', color: 'rgba(24,37,27,0.4)', marginTop: '1rem', textAlign: 'center' }}>
+                Conceptual — employees control their own permissions
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20" style={{ backgroundColor: '#F8F5F1' }}>
-        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-          <h2 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 800, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#1C2E5B', marginBottom: '1.25rem' }}>
-            Ready to add GH Trial to your benefits?
+      {/* ── CTA ── */}
+      <section className="py-28 px-6" style={{ background: 'var(--forest)' }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="headline-lg text-white mb-8">
+            Ready to give your team
+            <br />
+            <em className="italic-accent">financial peace of mind?</em>
           </h2>
-          <p style={{ fontSize: '1.05rem', color: '#26334A', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-            Request a proposal and our team will walk you through everything.
-          </p>
-          <Link href="/signup" className="inline-block px-8 py-4 rounded-xl font-semibold text-white text-lg transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#E9632B', fontFamily: 'Inter, sans-serif' }}>
-            Request a Proposal
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/talk-to-sales" className="btn-primary">
+              Get Started →
+            </Link>
+            <Link href="/for-employers" className="btn-outline">
+              For Employers
+            </Link>
+          </div>
         </div>
       </section>
 
