@@ -187,7 +187,7 @@ export default function HomePage() {
       <section
         className="relative min-h-screen flex items-center"
         style={{
-          background: 'linear-gradient(135deg, #0D1526 0%, #1A2340 40%, #1E2D52 70%, #0D1526 100%)',
+          background: 'linear-gradient(135deg, #1A0A0F 0%, #2A1018 40%, #351520 70%, #1A0A0F 100%)',
           overflow: 'hidden',
         }}
       >
@@ -196,8 +196,8 @@ export default function HomePage() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(61,90,138,0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(61,90,138,0.15) 1px, transparent 1px)
+              linear-gradient(rgba(180,50,80,0.12) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(180,50,80,0.12) 1px, transparent 1px)
             `,
             backgroundSize: '60px 60px',
           }}
@@ -210,7 +210,7 @@ export default function HomePage() {
             width: '600px',
             height: '600px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(61,90,138,0.25) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(180,50,80,0.2) 0%, transparent 70%)',
             top: '-100px',
             right: '-100px',
           }}
@@ -221,7 +221,7 @@ export default function HomePage() {
             width: '400px',
             height: '400px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(107,143,191,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(210,80,100,0.12) 0%, transparent 70%)',
             bottom: '100px',
             left: '-50px',
           }}
@@ -241,11 +241,11 @@ export default function HomePage() {
             <div
               className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full"
               style={{
-                background: 'rgba(61,90,138,0.2)',
-                border: '1px solid rgba(61,90,138,0.4)',
+                background: 'rgba(180,50,80,0.15)',
+                border: '1px solid rgba(180,50,80,0.35)',
               }}
             >
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6B8FBF' }} />
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#E06080' }} />
               <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', fontWeight: 500 }}>
                 Expert Financial Coaching
               </span>
@@ -265,7 +265,7 @@ export default function HomePage() {
             >
               Expert advice
               <br />
-              <span style={{ color: '#6B8FBF' }}>for every financial</span>
+              <span style={{ color: '#E06080' }}>for every financial</span>
               <br />
               decision.
             </h1>
@@ -289,7 +289,7 @@ export default function HomePage() {
                 href="/talk-to-sales"
                 className="inline-flex items-center gap-2"
                 style={{
-                  background: '#3D5A8A',
+                  background: '#8A2040',
                   color: 'white',
                   fontSize: '0.95rem',
                   fontWeight: 600,
@@ -297,8 +297,8 @@ export default function HomePage() {
                   borderRadius: '10px',
                   transition: 'background 0.2s, transform 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#4A6FA0'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#3D5A8A'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#9A2848'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#8A2040'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 Get Started Free
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -342,7 +342,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PILLARS BAR ── */}
-      <section style={{ background: 'var(--forest)', borderTop: '1px solid rgba(245,243,235,0.08)' }}>
+      <section style={{ background: '#2A1018', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
         <div className="max-w-5xl mx-auto px-6 py-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
