@@ -16,6 +16,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [],
+    shortcut: [],
+    apple: [],
+  },
 };
 
 export default function RootLayout({
