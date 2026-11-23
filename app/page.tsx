@@ -1,176 +1,91 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import { PathMockup, GuideMockup } from './components/Mockups';
+import EmployerUsageMockup from './components/EmployerUsageMockup';
+import { careerStages } from './components/stages';
+import { NOT_A_BANK_LINE } from './components/SmsCopy';
 
-// ─── Animated Counter ──────────────────────────────────────────────────────────
-function Counter({ target, prefix = '', suffix = '' }: { target: number; prefix?: string; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        let start = 0;
-        const step = target / 60;
-        const timer = setInterval(() => {
-          start += step;
-          if (start >= target) { setCount(target); clearInterval(timer); }
-          else setCount(Math.floor(start));
-        }, 16);
-        observer.disconnect();
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-  return <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>;
-}
+const arrow = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
 
-// ─── App UI: Dashboard Mockup ──────────────────────────────────────────────────
-function DashboardMockup() {
-  return (
-    <div className="app-card p-6 w-full max-w-sm mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-5">
-        <div>
-          <p className="font-mono-label" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>Good morning</p>
-          <p style={{ fontWeight: 600, color: 'var(--forest)', fontSize: '1rem' }}>Jordan, here&apos;s your overview</p>
-        </div>
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold"
-          style={{ background: 'var(--forest)', color: 'var(--ivory)' }}
-        >
-          J
-        </div>
-      </div>
+const howItWorks = [
+  {
+    num: '01',
+    title: 'Choose your stage',
+    desc: 'Pick the career stage that fits you today: First Job, Growing Career, Leadership & Peak Earning, or Pre-Retirement.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4 21V4" />
+        <path d="M4 4h12l-2 4 2 4H4" />
+      </svg>
+    ),
+  },
+  {
+    num: '02',
+    title: 'Follow your path',
+    desc: 'Your stage comes with a step-by-step path of decision guides, checklists and calculators. Each completed step unlocks the next.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="6" cy="19" r="2" />
+        <circle cx="18" cy="5" r="2" />
+        <path d="M8 19h6a4 4 0 0 0 0-8h-4a4 4 0 0 1 0-8h6" />
+      </svg>
+    ),
+  },
+  {
+    num: '03',
+    title: 'Use the tools',
+    desc: 'Work through a guide, tick off a checklist, or type your own numbers into a calculator. Everything you enter is private to you.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <path d="M8 6h8M8 11h2M12 11h2M8 15h2M12 15h2" />
+      </svg>
+    ),
+  },
+  {
+    num: '04',
+    title: 'Get reminders',
+    desc: 'Automated reminders point you to your next step, so you can pick your path back up whenever it suits you.',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+      </svg>
+    ),
+  },
+];
 
-      {/* Net Worth Card */}
-      <div
-        className="rounded-2xl p-4 mb-4"
-        style={{ background: 'var(--forest)', color: 'var(--ivory)' }}
-      >
-        <p className="font-mono-label mb-1" style={{ color: 'rgba(245,243,235,0.5)', fontSize: '0.6rem' }}>Net Worth</p>
-        <p style={{ fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.02em' }}>$48,240</p>
-        <p style={{ color: 'rgba(245,243,235,0.6)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
-          <span style={{ color: '#7EC8A0' }}>↑ $1,240</span> this month
-        </p>
-      </div>
+const pillars = [
+  {
+    title: 'Private by design',
+    desc: 'Path progress and calculator entries stay with the employee. Employers see anonymous totals only.',
+    icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
+  },
+  {
+    title: 'Self-serve, at your pace',
+    desc: 'Guides, checklists and calculators are there whenever you want them. No appointments, no waiting.',
+    icon: <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 5v5l3 3" />,
+  },
+  {
+    title: 'Built for every career stage',
+    desc: 'From your first paycheck to your last day before retirement, there is a path that fits where you are.',
+    icon: (
+      <>
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+        <polyline points="16 7 22 7 22 13" />
+      </>
+    ),
+  },
+];
 
-      {/* Goals */}
-      <div className="space-y-3 mb-4">
-        {[
-          { label: 'Emergency Fund', current: 4200, goal: 6000, pct: 70, color: '#485238' },
-          { label: 'Student Loan Payoff', current: 8400, goal: 12000, pct: 70, color: '#18251B' },
-          { label: 'Retirement (401k)', current: 18600, goal: 25000, pct: 74, color: '#485238' },
-        ].map(g => (
-          <div key={g.label}>
-            <div className="flex justify-between items-center mb-1">
-              <span style={{ fontSize: '0.78rem', color: 'var(--charcoal)', fontWeight: 500 }}>{g.label}</span>
-              <span className="font-mono-label" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>{g.pct}%</span>
-            </div>
-            <div className="rounded-full h-1.5" style={{ background: 'rgba(24,37,27,0.1)' }}>
-              <div
-                className="h-1.5 rounded-full"
-                style={{ width: `${g.pct}%`, background: g.color, transition: 'width 1s ease' }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* AI Insight */}
-      <div
-        className="rounded-xl p-3 flex items-start gap-3"
-        style={{ background: 'rgba(72,82,56,0.1)', border: '1px solid rgba(72,82,56,0.2)' }}
-      >
-        <div
-          className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-          style={{ background: 'var(--olive)' }}
-        >
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 5v6m0 4h.01" />
-          </svg>
-        </div>
-        <p style={{ fontSize: '0.72rem', color: 'var(--forest)', lineHeight: 1.5 }}>
-          <strong>AI Insight:</strong> You&apos;re on track to fully fund your emergency fund by March. Consider increasing your 401k contribution by 2%.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ─── App UI: AI Chat Mockup ────────────────────────────────────────────────────
-function ChatMockup() {
-  const messages = [
-    { role: 'user', text: 'How much should I have in my emergency fund?' },
-    { role: 'ai', text: 'Based on your monthly expenses of $3,200, a solid emergency fund is 3–6 months of expenses — so $9,600 to $19,200. You currently have $4,200 saved. You\'re 44% of the way to your minimum goal.' },
-    { role: 'user', text: 'What\'s the fastest way to get there?' },
-    { role: 'ai', text: 'Redirecting your $180/month dining budget by 30% would add $54/month. At that rate, you\'d hit $9,600 in about 10 months. Want me to set up an automatic transfer?' },
-  ];
-
-  return (
-    <div className="app-card p-5 w-full max-w-sm mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
-      {/* Chat header */}
-      <div className="flex items-center gap-3 mb-4 pb-4" style={{ borderBottom: '1px solid rgba(24,37,27,0.08)' }}>
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center"
-          style={{ background: 'var(--forest)' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C8 2 4 6 4 10c0 5 8 12 8 12s8-7 8-12c0-4-4-8-8-8z" fill="#F5F3EB" opacity="0.9" />
-          </svg>
-        </div>
-        <div>
-          <p style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--forest)' }}>Prosperity AI</p>
-          <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            <p className="font-mono-label" style={{ color: 'var(--olive)', fontSize: '0.55rem' }}>Online</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="space-y-3 mb-4">
-        {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className="rounded-2xl px-3 py-2 max-w-[85%]"
-              style={{
-                background: msg.role === 'user' ? 'var(--forest)' : 'rgba(72,82,56,0.1)',
-                color: msg.role === 'user' ? 'var(--ivory)' : 'var(--charcoal)',
-                fontSize: '0.72rem',
-                lineHeight: 1.5,
-                borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-              }}
-            >
-              {msg.text}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Input */}
-      <div
-        className="flex items-center gap-2 rounded-full px-4 py-2"
-        style={{ background: 'rgba(24,37,27,0.06)', border: '1px solid rgba(24,37,27,0.1)' }}
-      >
-        <p style={{ fontSize: '0.72rem', color: 'rgba(24,37,27,0.35)', flex: 1 }}>Ask anything about your finances…</p>
-        <div
-          className="w-6 h-6 rounded-full flex items-center justify-center"
-          style={{ background: 'var(--forest)' }}
-        >
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function HomePage() {
   const [heroLoaded, setHeroLoaded] = useState(false);
 
@@ -187,30 +102,27 @@ export default function HomePage() {
       <section
         className="relative min-h-screen flex items-center"
         style={{
-          background: 'linear-gradient(135deg, #1A0A0F 0%, #2A1018 40%, #351520 70%, #1A0A0F 100%)',
+          background: 'linear-gradient(135deg, #1A0A0F 0%, #2A1018 40%, #3A1622 70%, #1A0A0F 100%)',
           overflow: 'hidden',
         }}
       >
-        {/* Animated grid background */}
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(180,50,80,0.12) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(180,50,80,0.12) 1px, transparent 1px)
+              linear-gradient(rgba(138,32,64,0.18) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(138,32,64,0.18) 1px, transparent 1px)
             `,
             backgroundSize: '60px 60px',
           }}
         />
-
-        {/* Glow orbs */}
         <div
           className="absolute"
           style={{
             width: '600px',
             height: '600px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(180,50,80,0.2) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(138,32,64,0.35) 0%, transparent 70%)',
             top: '-100px',
             right: '-100px',
           }}
@@ -221,13 +133,12 @@ export default function HomePage() {
             width: '400px',
             height: '400px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(210,80,100,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(224,160,64,0.14) 0%, transparent 70%)',
             bottom: '100px',
             left: '-50px',
           }}
         />
 
-        {/* Content */}
         <div
           className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-20"
           style={{
@@ -237,21 +148,16 @@ export default function HomePage() {
           }}
         >
           <div className="max-w-3xl">
-            {/* Badge */}
             <div
               className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full"
-              style={{
-                background: 'rgba(180,50,80,0.15)',
-                border: '1px solid rgba(180,50,80,0.35)',
-              }}
+              style={{ background: 'rgba(224,160,64,0.15)', border: '1px solid rgba(224,160,64,0.45)' }}
             >
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#E06080' }} />
-              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', fontWeight: 500 }}>
-                Expert Financial Coaching
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#E0A040' }} />
+              <span style={{ color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 500 }}>
+                Self-serve tools for every career stage
               </span>
             </div>
 
-            {/* Headline */}
             <h1
               style={{
                 fontFamily: 'Inter, sans-serif',
@@ -259,83 +165,66 @@ export default function HomePage() {
                 fontWeight: 800,
                 lineHeight: 1.1,
                 letterSpacing: '-0.03em',
-                color: 'white',
+                color: '#FFFFFF',
                 marginBottom: '1.5rem',
               }}
             >
-              Expert advice
+              Smarter money decisions
               <br />
-              <span style={{ color: '#E06080' }}>for every financial</span>
+              <span style={{ color: '#E0A040' }}>at every stage</span>
               <br />
-              decision.
+              of your career.
             </h1>
 
-            {/* Subheading */}
             <p
               style={{
-                color: 'rgba(255,255,255,0.6)',
+                color: 'rgba(255,255,255,0.85)',
                 fontSize: '1.15rem',
                 lineHeight: 1.7,
-                maxWidth: '520px',
+                maxWidth: '540px',
                 marginBottom: '2.5rem',
               }}
             >
-              Prosperity Partners gives every employee access to expert financial coaches who help them make smarter decisions at every stage of their career.
+              Luminary Path Financial is employer-offered software that walks you through guides, checklists and calculators, from your first paycheck to your last day before retirement.
             </p>
 
-            {/* CTAs */}
+
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/talk-to-sales"
+                href="/signup"
                 className="inline-flex items-center gap-2"
                 style={{
-                  background: '#8A2040',
-                  color: 'white',
+                  background: '#E0A040',
+                  color: '#1A0A0F',
                   fontSize: '0.95rem',
                   fontWeight: 600,
                   padding: '0.875rem 2rem',
                   borderRadius: '10px',
-                  transition: 'background 0.2s, transform 0.2s',
+                  transition: 'opacity 0.2s, transform 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#9A2848'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#8A2040'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                Get Started Free
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                Employee Sign Up
+                {arrow}
               </Link>
               <Link
                 href="/for-employers"
                 className="inline-flex items-center gap-2"
                 style={{
-                  color: 'rgba(255,255,255,0.8)',
+                  color: '#FFFFFF',
                   fontSize: '0.95rem',
                   fontWeight: 500,
                   padding: '0.875rem 2rem',
                   borderRadius: '10px',
-                  border: '1px solid rgba(255,255,255,0.2)',
+                  border: '1px solid rgba(255,255,255,0.4)',
                   transition: 'all 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.7)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
               >
                 For Employers
               </Link>
-            </div>
-
-            {/* Social proof */}
-            <div className="flex items-center gap-6 mt-12">
-              {[
-                { value: '10,000+', label: 'Employees served' },
-                { value: '94%', label: 'Satisfaction rate' },
-                { value: '$2.39', label: 'ROI per $1 invested' },
-              ].map(stat => (
-                <div key={stat.label}>
-                  <p style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', lineHeight: 1 }}>{stat.value}</p>
-                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.75rem', marginTop: '0.25rem' }}>{stat.label}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -345,48 +234,21 @@ export default function HomePage() {
       <section style={{ background: '#2A1018', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
         <div className="max-w-5xl mx-auto px-6 py-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                ),
-                title: 'Privacy by design',
-                desc: 'Employees control their data. Employers see only aggregate trends — never individual finances.',
-              },
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 5v6m0 4h.01" />
-                  </svg>
-                ),
-                title: 'AI that actually helps',
-                desc: 'Personalized guidance based on each employee\'s real financial situation — not generic advice.',
-              },
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                    <polyline points="16 7 22 7 22 13" />
-                  </svg>
-                ),
-                title: 'Built for every employee',
-                desc: 'From entry-level to executive — Prosperity Partners meets employees where they are, at every income and life stage.',
-              },
-            ].map((pillar, i) => (
-              <div key={i} className="flex items-start gap-4">
+            {pillars.map(pillar => (
+              <div key={pillar.title} className="flex items-start gap-4">
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(245,243,235,0.1)', color: 'rgba(245,243,235,0.7)' }}
+                  style={{ background: 'rgba(224,160,64,0.18)', color: '#E0A040' }}
                 >
-                  {pillar.icon}
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    {pillar.icon}
+                  </svg>
                 </div>
                 <div>
-                  <p style={{ color: 'var(--ivory)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.35rem' }}>
+                  <p style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.35rem' }}>
                     {pillar.title}
                   </p>
-                  <p style={{ color: 'rgba(245,243,235,0.5)', fontSize: '0.82rem', lineHeight: 1.6 }}>
+                  <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.82rem', lineHeight: 1.6 }}>
                     {pillar.desc}
                   </p>
                 </div>
@@ -396,64 +258,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── EDITORIAL STATEMENT ── */}
+      {/* ── CAREER STAGES ── */}
       <section className="py-28 px-6" style={{ background: 'var(--ivory)' }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="font-mono-label mb-8" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
-            Why Prosperity Partners
-          </p>
-          <h2 className="headline-lg mb-8" style={{ color: 'var(--forest)' }}>
-            <em className="italic-accent">Why</em> employers choose
-            <br />
-            Prosperity Partners
-          </h2>
-          <p style={{ color: 'rgba(24,37,27,0.6)', fontSize: '1.05rem', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>
-            Trusted by forward-thinking companies to give every employee access to expert financial coaching that drives smarter decisions and better outcomes.
-          </p>
-        </div>
-      </section>
-
-      {/* ── FEATURES (Origin-inspired) ── */}
-      <section className="pb-28 px-6" style={{ background: 'var(--ivory)' }}>
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="font-mono-label mb-6" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
+              Four Career Stages
+            </p>
+            <h2 className="headline-lg" style={{ color: 'var(--forest)' }}>
+              From your first paycheck
+              <br />
+              <em className="italic-accent">to your last day before retirement.</em>
+            </h2>
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                label: 'One Platform for Every Employee',
-                body: 'Support every financial journey—budgeting, investing, planning, and more—with a single, unified platform. Prosperity Partners meets employees where they are, no matter their income, location, or life stage.',
-              },
-              {
-                label: 'Global Access and Equity',
-                body: 'Offer financial support that scales. Prosperity Partners is built to serve teams in 70+ countries and 80+ languages, with culturally relevant guidance and localized experiences for true financial equity.',
-              },
-              {
-                label: 'Flexible Pricing, Proven ROI',
-                body: 'Get financial wellness that works—and works for your budget. Our pricing model scales with your team, delivering up to $2.39 in ROI for every $1 invested.',
-              },
-              {
-                label: 'Dedicated Success Team',
-                body: 'From onboarding to rollout to engagement campaigns, our customer success team is with you every step of the way—ensuring your program drives real adoption and impact.',
-              },
-            ].map((f, i) => (
-              <div
-                key={i}
-                className="card-feature p-8"
-                style={{ minHeight: '280px' }}
-              >
-                <p
-                  className="font-mono-label mb-6"
-                  style={{ color: 'var(--olive)', fontSize: '0.6rem', lineHeight: 1.5 }}
-                >
-                  {f.label}
+            {careerStages.map(stage => (
+              <div key={stage.name} className="card-feature p-8" style={{ minHeight: '320px' }}>
+                <p className="font-mono-label mb-4" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
+                  {stage.tag}
                 </p>
-                <p style={{ color: 'var(--charcoal)', fontSize: '0.95rem', lineHeight: 1.75 }}>
-                  {f.body}
+                <h3 className="font-serif mb-3" style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--forest)' }}>
+                  {stage.name}
+                </h3>
+                <p style={{ color: 'var(--charcoal)', fontSize: '0.88rem', lineHeight: 1.7, marginBottom: '1rem' }}>
+                  {stage.blurb}
                 </p>
+                <ul className="space-y-2">
+                  {stage.items.map(item => (
+                    <li key={item} className="flex items-start gap-2" style={{ fontSize: '0.82rem', color: 'var(--charcoal)', lineHeight: 1.5 }}>
+                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: 'var(--olive)' }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+
 
       {/* ── HOW IT WORKS ── */}
       <section className="py-28 px-6" style={{ background: 'var(--white)' }}>
@@ -463,84 +308,33 @@ export default function HomePage() {
               How It Works
             </p>
             <h2 className="headline-lg" style={{ color: 'var(--forest)' }}>
-              Your employees&apos; financial lives,
+              One clear step,
               <br />
-              <em className="italic-accent">finally supported.</em>
+              <em className="italic-accent">then the next.</em>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
-            {[
-              {
-                num: '01',
-                title: 'Connect',
-                desc: 'Employees securely link their financial accounts — bank, investments, loans — in minutes. They control exactly what they share.',
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                  </svg>
-                ),
-              },
-              {
-                num: '02',
-                title: 'Understand',
-                desc: 'Prosperity AI analyzes spending patterns, debt, savings gaps, and opportunities — giving each employee a clear picture of where they stand.',
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.35-4.35" />
-                  </svg>
-                ),
-              },
-              {
-                num: '03',
-                title: 'Plan',
-                desc: 'The AI builds personalized financial plans — emergency funds, debt payoff, retirement, home buying — tailored to each employee\'s goals.',
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M9 11l3 3L22 4" />
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                  </svg>
-                ),
-              },
-              {
-                num: '04',
-                title: 'Grow',
-                desc: 'Employees track progress, ask questions anytime, and build lasting financial habits — while employers see aggregate wellness metrics.',
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                    <polyline points="16 7 22 7 22 13" />
-                  </svg>
-                ),
-              },
-            ].map((step, i) => (
+            {howItWorks.map((step, i) => (
               <div key={step.num} className="relative">
                 <div
                   className="w-10 h-10 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: 'rgba(24,37,27,0.08)', color: 'var(--forest)' }}
+                  style={{ background: 'rgba(42,16,24,0.08)', color: 'var(--forest)' }}
                 >
                   {step.icon}
                 </div>
-                <p
-                  className="font-mono-label mb-3"
-                  style={{ color: 'rgba(24,37,27,0.25)', fontSize: '0.65rem' }}
-                >
+                <p className="font-mono-label mb-3" style={{ color: 'var(--olive)', fontSize: '0.65rem' }}>
                   {step.num}
                 </p>
-                <h3
-                  className="font-serif mb-3"
-                  style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--forest)' }}
-                >
+                <h3 className="font-serif mb-3" style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--forest)' }}>
                   {step.title}
                 </h3>
-                <p style={{ color: 'rgba(24,37,27,0.6)', fontSize: '0.88rem', lineHeight: 1.7 }}>
+                <p style={{ color: 'rgba(42,16,24,0.75)', fontSize: '0.88rem', lineHeight: 1.7 }}>
                   {step.desc}
                 </p>
-                {i < 3 && (
+                {i < howItWorks.length - 1 && (
                   <div className="hidden md:block absolute top-5 -right-3 z-10">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(24,37,27,0.2)" strokeWidth="1.5">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(42,16,24,0.3)" strokeWidth="1.5">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -559,100 +353,92 @@ export default function HomePage() {
               The Experience
             </p>
             <h2 className="headline-lg" style={{ color: 'var(--forest)' }}>
-              A financial advisor
+              A path you can see,
               <br />
-              <em className="italic-accent">in every pocket.</em>
+              <em className="italic-accent">a step at a time.</em>
             </h2>
             <p
               style={{
-                color: 'rgba(24,37,27,0.55)',
+                color: 'rgba(42,16,24,0.75)',
                 fontSize: '1rem',
                 lineHeight: 1.8,
-                maxWidth: '440px',
+                maxWidth: '460px',
                 margin: '1.5rem auto 0',
               }}
             >
-              Employees get a personalized dashboard and an AI they can ask anything — anytime.
+              Track where you are on your path, open the next guide, and try a calculator with numbers you type in yourself.
             </p>
           </div>
 
-          {/* Two-column UI demo */}
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left: Dashboard */}
+          <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
               <p className="font-mono-label mb-4" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
-                Financial Dashboard
+                Path Tracker
               </p>
-              <p
-                className="headline-md mb-6"
-                style={{ color: 'var(--forest)', fontSize: '1.5rem' }}
-              >
-                A clear view of every financial goal
+              <p className="headline-md mb-6" style={{ color: 'var(--forest)', fontSize: '1.5rem' }}>
+                See your next step at a glance
               </p>
-              <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-                Employees see their net worth, savings progress, debt payoff timeline, and AI-generated insights — all in one calm, organized view.
+              <p style={{ color: 'rgba(42,16,24,0.75)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '2rem' }}>
+                Each completed step unlocks the next one, so you always know what to do now and what is coming up.
               </p>
               <div className="animate-float">
-                <DashboardMockup />
+                <PathMockup />
               </div>
             </div>
 
-            {/* Right: AI Chat */}
             <div>
               <p className="font-mono-label mb-4" style={{ color: 'var(--olive)', fontSize: '0.6rem' }}>
-                AI Financial Advisor
+                Guides and Calculators
               </p>
-              <p
-                className="headline-md mb-6"
-                style={{ color: 'var(--forest)', fontSize: '1.5rem' }}
-              >
-                Ask anything. Get real answers.
+              <p className="headline-md mb-6" style={{ color: 'var(--forest)', fontSize: '1.5rem' }}>
+                Plain-language guides, simple tools
               </p>
-              <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-                Prosperity AI understands each employee&apos;s unique financial situation and gives personalized, actionable guidance — not generic advice.
+              <p style={{ color: 'rgba(42,16,24,0.75)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '2rem' }}>
+                Read a short guide, then use a calculator to see what a change could mean for you. Your entries stay private.
               </p>
               <div className="animate-float-delay">
-                <ChatMockup />
+                <GuideMockup />
               </div>
             </div>
           </div>
         </div>
       </section>
 
+
       {/* ── EMPLOYER SECTION ── */}
       <section className="py-28 px-6" style={{ background: 'var(--forest)' }}>
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="font-mono-label mb-6" style={{ color: 'rgba(245,243,235,0.4)', fontSize: '0.65rem' }}>
+              <p className="font-mono-label mb-6" style={{ color: '#E0A040', fontSize: '0.65rem' }}>
                 For Employers
               </p>
               <h2 className="headline-lg text-white mb-6">
-                Expert coaching for every employee.
+                A decision-support benefit
                 <br />
-                <em className="italic-accent">Without more overhead.</em>
+                <em className="italic-accent">for every career stage.</em>
               </h2>
-              <p style={{ color: 'rgba(245,243,235,0.65)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '2.5rem' }}>
-                Launch a financial wellness benefit your employees will actually use. Prosperity Partners handles everything — from onboarding to engagement — while you see aggregate impact metrics.
+              <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '2.5rem' }}>
+                Offer one benefit that fits a new hire and a long-tenured colleague alike. You see anonymous usage and path completion, never individual entries.
               </p>
               <div className="space-y-5">
                 {[
-                  { title: 'Simple rollout', desc: 'Deploy to your entire workforce in days, not months.' },
-                  { title: 'Privacy by design', desc: 'Employers see aggregate data only. Individual finances stay private.' },
-                  { title: 'Measurable ROI', desc: 'Track engagement, satisfaction, and financial health improvements.' },
+                  { title: 'Simple rollout', desc: 'Share an Employer ID and a sign-up link with your team.' },
+                  { title: 'Private by design', desc: 'Employees keep their entries to themselves.' },
+                  { title: 'Anonymous usage', desc: 'See how many paths are started and completed, in aggregate.' },
                 ].map(item => (
                   <div key={item.title} className="flex items-start gap-4">
                     <div
                       className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={{ background: 'rgba(245,243,235,0.15)', border: '1px solid rgba(245,243,235,0.2)' }}
+                      style={{ background: 'rgba(224,160,64,0.2)', border: '1px solid rgba(224,160,64,0.5)' }}
                     >
-                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#E0A040" strokeWidth="3">
                         <path d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
                     <div>
-                      <p style={{ color: 'var(--ivory)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.2rem' }}>{item.title}</p>
-                      <p style={{ color: 'rgba(245,243,235,0.55)', fontSize: '0.85rem' }}>{item.desc}</p>
+                      <p style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.2rem' }}>{item.title}</p>
+                      <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem' }}>{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -667,65 +453,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Employer dashboard mockup */}
             <div>
-              <div
-                className="rounded-2xl p-6"
-                style={{
-                  background: 'rgba(245,243,235,0.06)',
-                  border: '1px solid rgba(245,243,235,0.1)',
-                }}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <p className="font-mono-label" style={{ color: 'rgba(245,243,235,0.4)', fontSize: '0.6rem' }}>
-                      Employer Dashboard
-                    </p>
-                    <p style={{ color: 'var(--ivory)', fontWeight: 600, marginTop: '0.25rem' }}>Q3 Wellness Overview</p>
-                  </div>
-                  <div
-                    className="px-3 py-1 rounded-full font-mono-label"
-                    style={{ background: 'rgba(126,200,160,0.2)', color: '#7EC8A0', fontSize: '0.6rem' }}
-                  >
-                    Live
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {[
-                    { label: 'Active Employees', value: '847', change: '+12%' },
-                    { label: 'Avg. Financial Score', value: '72', change: '+8 pts' },
-                    { label: 'Goals Set', value: '2,341', change: 'this quarter' },
-                    { label: 'Program Engagement', value: '91%', change: '+5%' },
-                  ].map(stat => (
-                    <div
-                      key={stat.label}
-                      className="rounded-xl p-4"
-                      style={{ background: 'rgba(245,243,235,0.05)' }}
-                    >
-                      <p className="font-mono-label mb-2" style={{ color: 'rgba(245,243,235,0.35)', fontSize: '0.55rem' }}>
-                        {stat.label}
-                      </p>
-                      <p style={{ color: 'var(--ivory)', fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.02em' }}>
-                        {stat.value}
-                      </p>
-                      <p style={{ color: '#7EC8A0', fontSize: '0.72rem', marginTop: '0.2rem' }}>{stat.change}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div
-                  className="rounded-xl p-4 flex items-start gap-3"
-                  style={{ background: 'rgba(126,200,160,0.1)', border: '1px solid rgba(126,200,160,0.2)' }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7EC8A0" strokeWidth="2" className="flex-shrink-0 mt-0.5">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                  <p style={{ color: 'rgba(245,243,235,0.7)', fontSize: '0.75rem', lineHeight: 1.5 }}>
-                    <strong style={{ color: 'var(--ivory)' }}>Privacy protected:</strong> Employers see aggregate wellness trends — never individual financial data.
-                  </p>
-                </div>
-              </div>
+              <EmployerUsageMockup />
             </div>
           </div>
         </div>
@@ -738,36 +467,47 @@ export default function HomePage() {
             Get Started
           </p>
           <h2 className="headline-lg mb-8" style={{ color: 'var(--forest)' }}>
-            Give your employees
+            Pick your stage.
             <br />
-            <em className="italic-accent">expert financial guidance.</em>
+            <em className="italic-accent">Take the next step.</em>
           </h2>
           <p
             style={{
-              color: 'rgba(24,37,27,0.55)',
+              color: 'rgba(42,16,24,0.75)',
               fontSize: '1rem',
               lineHeight: 1.8,
-              maxWidth: '420px',
+              maxWidth: '440px',
               margin: '0 auto 2.5rem',
             }}
           >
-            Join companies building financially secure, confident, and resilient workforces with Prosperity Partners.
+            Sign up with the Employer ID from your HR team and start your path today.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/talk-to-sales" className="btn-forest">
-              Get Started
+            <Link href="/signup" className="btn-forest">
+              Employee Sign Up
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
-            <Link href="/for-employers" className="btn-outline" style={{ color: 'var(--forest)', borderColor: 'rgba(24,37,27,0.3)' }}>
+            <Link href="/for-employers" className="btn-outline" style={{ color: 'var(--forest)', borderColor: 'rgba(42,16,24,0.4)' }}>
               For Employers
             </Link>
           </div>
         </div>
       </section>
 
+      {/* ── NOT A BANK ── */}
+      <section className="px-6 pb-16" style={{ background: 'var(--ivory)' }}>
+        <p
+          className="max-w-3xl mx-auto text-center"
+          style={{ color: 'rgba(42,16,24,0.75)', fontSize: '0.82rem', lineHeight: 1.7 }}
+        >
+          {NOT_A_BANK_LINE}
+        </p>
+      </section>
+
       <Footer />
     </div>
   );
 }
+

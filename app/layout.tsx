@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Verdant Finance — Financial Wellness for Every Employee",
-  description: "Verdant Finance is an AI-powered financial wellness platform that helps companies support their employees' financial security, confidence, and long-term wellbeing.",
-  keywords: "employee financial wellness, financial wellbeing, workplace financial benefits, AI financial advisor, employee benefits, financial security",
+  title: "Luminary Path Financial — Smarter Money Decisions at Every Career Stage",
+  description: "Luminary Path Financial gives employees self-serve guides, checklists and calculators for smarter money decisions at every stage of their career.",
+  keywords: "career stage money decisions, employee benefit, self-serve guides, checklists, calculators, 401(k) contribution, emergency fund, retirement timeline",
   openGraph: {
-    title: "Verdant Finance — Financial Wellness for Every Employee",
-    description: "AI-powered financial wellness that meets employees where they are. Budgeting, planning, investing — one platform for every financial journey.",
-    siteName: "Verdant Finance",
+    title: "Luminary Path Financial — Smarter Money Decisions at Every Career Stage",
+    description: "Luminary Path Financial gives employees self-serve guides, checklists and calculators for smarter money decisions at every stage of their career.",
+    siteName: "Luminary Path Financial",
     locale: "en_US",
     type: "website",
   },

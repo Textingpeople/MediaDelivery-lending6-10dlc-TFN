@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { NO_SHARING_SENTENCE } from '../components/SmsCopy';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -30,7 +31,7 @@ export default function ContactPage() {
         style={{ background: 'var(--forest)' }}
       >
         <div className="max-w-4xl mx-auto">
-          <p className="font-mono-label mb-6" style={{ color: 'rgba(245,243,235,0.45)', fontSize: '0.65rem' }}>
+          <p className="font-mono-label mb-6" style={{ color: '#E0A040', fontSize: '0.65rem' }}>
             Contact
           </p>
           <h1 className="headline-xl text-white mb-6" style={{ maxWidth: '560px' }}>
@@ -38,8 +39,8 @@ export default function ContactPage() {
             <br />
             <em className="italic-accent">to help.</em>
           </h1>
-          <p style={{ color: 'rgba(245,243,235,0.6)', fontSize: '1rem', lineHeight: 1.8, maxWidth: '400px' }}>
-            Reach out with any questions, concerns, or feedback. We respond within one to two business days.
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1rem', lineHeight: 1.8, maxWidth: '440px' }}>
+            Questions about your path, your reminders or your account? Send us a note and we will reply within one to two business days.
           </p>
         </div>
       </section>
@@ -58,11 +59,11 @@ export default function ContactPage() {
               {submitted ? (
                 <div
                   className="rounded-2xl p-10 text-center"
-                  style={{ background: 'rgba(72,82,56,0.08)', border: '1px solid rgba(72,82,56,0.15)' }}
+                  style={{ background: 'rgba(138, 32, 64, 0.08)', border: '1px solid rgba(138, 32, 64, 0.15)' }}
                 >
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
-                    style={{ background: 'rgba(72,82,56,0.12)' }}
+                    style={{ background: 'rgba(138, 32, 64, 0.12)' }}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--olive)" strokeWidth="2">
                       <path d="M5 13l4 4L19 7" />
@@ -71,7 +72,7 @@ export default function ContactPage() {
                   <h3 className="font-serif mb-3" style={{ fontSize: '1.4rem', color: 'var(--forest)' }}>
                     Message sent.
                   </h3>
-                  <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                  <p style={{ color: 'rgba(42, 16, 24, 0.55)', fontSize: '0.9rem', lineHeight: 1.7 }}>
                     Thank you for reaching out. We&apos;ll get back to you within 1–2 business days.
                   </p>
                 </div>
@@ -91,8 +92,8 @@ export default function ContactPage() {
                       placeholder="Jane Smith"
                       className="w-full px-4 py-3 rounded-xl text-sm"
                       style={{
-                        background: 'rgba(24,37,27,0.04)',
-                        border: '1px solid rgba(24,37,27,0.12)',
+                        background: 'rgba(42, 16, 24, 0.04)',
+                        border: '1px solid rgba(42, 16, 24, 0.12)',
                         color: 'var(--charcoal)',
                         outline: 'none',
                         fontFamily: 'Inter, sans-serif',
@@ -114,8 +115,8 @@ export default function ContactPage() {
                       placeholder="jane@example.com"
                       className="w-full px-4 py-3 rounded-xl text-sm"
                       style={{
-                        background: 'rgba(24,37,27,0.04)',
-                        border: '1px solid rgba(24,37,27,0.12)',
+                        background: 'rgba(42, 16, 24, 0.04)',
+                        border: '1px solid rgba(42, 16, 24, 0.12)',
                         color: 'var(--charcoal)',
                         outline: 'none',
                         fontFamily: 'Inter, sans-serif',
@@ -135,9 +136,9 @@ export default function ContactPage() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl text-sm"
                       style={{
-                        background: 'rgba(24,37,27,0.04)',
-                        border: '1px solid rgba(24,37,27,0.12)',
-                        color: formData.subject ? 'var(--charcoal)' : 'rgba(24,37,27,0.35)',
+                        background: 'rgba(42, 16, 24, 0.04)',
+                        border: '1px solid rgba(42, 16, 24, 0.12)',
+                        color: formData.subject ? 'var(--charcoal)' : 'rgba(42, 16, 24, 0.35)',
                         outline: 'none',
                         fontFamily: 'Inter, sans-serif',
                       }}
@@ -165,8 +166,8 @@ export default function ContactPage() {
                       placeholder="How can we help you?"
                       className="w-full px-4 py-3 rounded-xl text-sm resize-none"
                       style={{
-                        background: 'rgba(24,37,27,0.04)',
-                        border: '1px solid rgba(24,37,27,0.12)',
+                        background: 'rgba(42, 16, 24, 0.04)',
+                        border: '1px solid rgba(42, 16, 24, 0.12)',
                         color: 'var(--charcoal)',
                         outline: 'none',
                         fontFamily: 'Inter, sans-serif',
@@ -200,46 +201,46 @@ export default function ContactPage() {
               <div className="space-y-8">
                 {/* Email */}
                 <div>
-                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(42, 16, 24, 0.35)', fontSize: '0.6rem' }}>
                     Email
                   </p>
                   <a
-                    href="mailto:support@verdantfinance.com"
+                    href="mailto:support@luminarypathfinancial.com"
                     style={{ color: 'var(--forest)', fontWeight: 600, fontSize: '0.95rem' }}
                   >
-                    support@verdantfinance.com
+                    support@luminarypathfinancial.com
                   </a>
-                  <p style={{ color: 'rgba(24,37,27,0.45)', fontSize: '0.82rem', marginTop: '0.3rem' }}>
+                  <p style={{ color: 'rgba(42, 16, 24, 0.45)', fontSize: '0.82rem', marginTop: '0.3rem' }}>
                     Response within 1–2 business days
                   </p>
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(42, 16, 24, 0.35)', fontSize: '0.6rem' }}>
                     Phone
                   </p>
                   <a
-                    href="tel:+18005551234"
+                    href="tel:+19083998307"
                     style={{ color: 'var(--forest)', fontWeight: 600, fontSize: '0.95rem' }}
                   >
-                    (800) 555-1234
+                    (908) 399-8307
                   </a>
                 </div>
 
                 {/* Address */}
                 <div>
-                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(42, 16, 24, 0.35)', fontSize: '0.6rem' }}>
                     Address
                   </p>
                   <p style={{ color: 'var(--charcoal)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                    1200 Financial Way Ste 400<br />Austin, TX 78701<br />United States
+                    Media Delivery Solutions LLC<br />9 Johnston Dr<br />Bloomsbury, NJ 08804<br />United States
                   </p>
                 </div>
 
                 {/* SMS Support */}
                 <div>
-                  <p className="font-mono-label mb-2" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                  <p className="font-mono-label mb-2" style={{ color: 'rgba(42, 16, 24, 0.35)', fontSize: '0.6rem' }}>
                     SMS Support
                   </p>
                   <p style={{ color: 'var(--charcoal)', fontSize: '0.9rem', lineHeight: 1.7 }}>
@@ -252,30 +253,30 @@ export default function ContactPage() {
                 </div>
 
                 {/* Divider */}
-                <div style={{ borderTop: '1px solid rgba(24,37,27,0.1)', paddingTop: '2rem' }}>
-                  <p className="font-mono-label mb-4" style={{ color: 'rgba(24,37,27,0.35)', fontSize: '0.6rem' }}>
+                <div style={{ borderTop: '1px solid rgba(42, 16, 24, 0.1)', paddingTop: '2rem' }}>
+                  <p className="font-mono-label mb-4" style={{ color: 'rgba(42, 16, 24, 0.35)', fontSize: '0.6rem' }}>
                     FAQ
                   </p>
                   <div className="space-y-5">
                     {[
                       {
                         q: 'How do I opt out of SMS?',
-                        a: 'Reply STOP to any message. You\'ll be removed immediately.',
+                        a: "Reply STOP to any message and you'll be removed right away. Texts are optional and are never needed to use your path.",
                       },
                       {
                         q: 'Will my information be shared?',
-                        a: 'No. We do not sell or share your mobile number with third parties for marketing.',
+                        a: NO_SHARING_SENTENCE,
                       },
                       {
                         q: 'How do I request my data?',
-                        a: 'Select "Privacy / Data Request" in the form and we\'ll respond within 5 business days.',
+                        a: 'Choose "Privacy / Data Request" in the form and we will reply within 5 business days.',
                       },
                     ].map((item, i) => (
                       <div key={i}>
                         <p style={{ fontWeight: 600, color: 'var(--forest)', fontSize: '0.88rem', marginBottom: '0.3rem' }}>
                           {item.q}
                         </p>
-                        <p style={{ color: 'rgba(24,37,27,0.55)', fontSize: '0.82rem', lineHeight: 1.6 }}>
+                        <p style={{ color: 'rgba(42, 16, 24, 0.55)', fontSize: '0.82rem', lineHeight: 1.6 }}>
                           {item.a}{' '}
                           {i === 1 && (
                             <Link href="/privacy" style={{ color: 'var(--olive)', textDecoration: 'underline' }}>

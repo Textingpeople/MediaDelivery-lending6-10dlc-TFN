@@ -1,28 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
-export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+const navItems = [
+  { label: 'Product', href: '/product' },
+  { label: 'For Employers', href: '/for-employers' },
+  { label: 'Contact', href: '/contact' },
+];
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+export default function Nav() {
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-6 pt-4">
       <nav
         className="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
         style={{
-          background: scrolled ? 'rgba(26,10,15,0.95)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : 'none',
-          transition: 'background 0.3s ease, border-color 0.3s ease',
-          borderRadius: scrolled ? '0' : '0',
+          background: 'rgba(26,10,15,0.95)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '16px',
         }}
       >
         {/* Logo */}
@@ -32,14 +31,14 @@ export default function Nav() {
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: 'linear-gradient(135deg, #8A2040 0%, #E06080 100%)',
+              background: 'linear-gradient(135deg, #8A2040 0%, #E0A040 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
             <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: '0.9rem', color: 'white', lineHeight: 1 }}>
-              P
+              L
             </span>
           </div>
           <span
@@ -51,28 +50,24 @@ export default function Nav() {
               letterSpacing: '-0.01em',
             }}
           >
-            Prosperity Partners
+            Luminary Path Financial
           </span>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
-          {[
-            { label: 'Product', href: '/product' },
-            { label: 'For Employers', href: '/for-employers' },
-            { label: 'Contact', href: '/contact' },
-          ].map(item => (
+          {navItems.map(item => (
             <Link
               key={item.href}
               href={item.href}
               style={{
-                color: 'rgba(255,255,255,0.75)',
+                color: 'rgba(255,255,255,0.85)',
                 fontSize: '0.875rem',
                 fontWeight: 500,
                 transition: 'color 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = 'white'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#E0A040'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)'; }}
             >
               {item.label}
             </Link>
@@ -85,35 +80,35 @@ export default function Nav() {
             href="/signup"
             className="hidden md:inline-flex"
             style={{
-              color: 'rgba(255,255,255,0.8)',
+              color: 'rgba(255,255,255,0.9)',
               fontSize: '0.875rem',
               fontWeight: 500,
               padding: '0.5rem 1rem',
               borderRadius: '8px',
-              border: '1px solid rgba(255,255,255,0.2)',
+              border: '1px solid rgba(255,255,255,0.25)',
               transition: 'all 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
           >
-            Sign In
+            Employee Sign Up
           </Link>
           <Link
             href="/talk-to-sales"
             className="hidden md:inline-flex items-center gap-2"
             style={{
-              background: '#8A2040',
-              color: 'white',
+              background: '#E0A040',
+              color: '#1A0A0F',
               fontSize: '0.875rem',
               fontWeight: 600,
               padding: '0.5rem 1.25rem',
               borderRadius: '8px',
-              transition: 'background 0.2s',
+              transition: 'opacity 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#9A2848'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#8A2040'; }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
           >
-            Get Started
+            Talk to Sales
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -149,22 +144,18 @@ export default function Nav() {
         <div
           className="absolute top-20 left-4 right-4 rounded-2xl p-6 md:hidden"
           style={{
-            background: 'rgba(26,10,15,0.97)',
+            background: 'rgba(26,10,15,0.98)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,255,255,0.1)',
           }}
         >
-          {[
-            { label: 'Product', href: '/product' },
-            { label: 'For Employers', href: '/for-employers' },
-            { label: 'Contact', href: '/contact' },
-          ].map(item => (
+          {[...navItems, { label: 'Employee Sign Up', href: '/signup' }].map(item => (
             <Link
               key={item.href}
               href={item.href}
               className="block py-3 border-b"
               style={{
-                color: 'rgba(255,255,255,0.7)',
+                color: 'rgba(255,255,255,0.85)',
                 borderColor: 'rgba(255,255,255,0.08)',
                 fontSize: '0.9rem',
               }}
@@ -176,13 +167,14 @@ export default function Nav() {
           <Link
             href="/talk-to-sales"
             className="block mt-4 text-center py-3 rounded-xl"
-            style={{ background: '#8A2040', color: 'white', fontWeight: 600 }}
+            style={{ background: '#E0A040', color: '#1A0A0F', fontWeight: 600 }}
             onClick={() => setMobileOpen(false)}
           >
-            Get Started →
+            Talk to Sales →
           </Link>
         </div>
       )}
     </header>
   );
 }
+
